@@ -1,6 +1,22 @@
 <?php
-if (!isset($_SESSION)) {
-    session_start();
+
+session_start();
+
+if (isset($_SESSION['username'])) {
+    if ($_SESSION['role'] === 'dokter' && (!isset($_GET['page']) || !in_array($_GET['page'], ['dokter','pasien', 'periksa','detail_periksa','obat','daftar_poli']))) {
+        header('Location: index.php?page=dokter');
+        exit;
+    } elseif ($_SESSION['role'] === 'admin' && (!isset($_GET['page']) || !in_array($_GET['page'], ['dokter','pasien','poli','obat']))) {
+        header('Location: index.php?page=pasien');
+        exit;
+    } elseif ($_SESSION['role'] === 'pasien' && (!isset($_GET['page']) || !in_array($_GET['page'], ['lihat_jadwal_dokter','daftar_pasien','daftar_poli_pasien']))) {
+        header('Location: index.php?page=daftar_pasien');
+        exit;
+    }
+    if(isset($_GET['page'])&& $_GET['page']==='periksa'&& empty($_SESSION['role'])){
+        header('location: index.php?page=periksa');
+    }
+    
 }
 include_once("koneksi.php");
 ?>
