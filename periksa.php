@@ -170,3 +170,7 @@ include'koneksi.php';
     ?>
     </tbody>
     </table>
+<footer>
+  <p>Author: Manz</p>
+  <p><a href="https://github.com/manzuel29/BimbinganKarir_poliklinik.web">git.Mnz</a></p>
+</footer>
