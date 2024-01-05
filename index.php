@@ -3,13 +3,13 @@
 session_start();
 
 if (isset($_SESSION['username'])) {
-    if ($_SESSION['role'] === 'dokter' && (!isset($_GET['page']) || !in_array($_GET['page'], ['dokter','pasien', 'periksa','detail_periksa','obat','daftar_poli']))) {
+    if ($_SESSION['role'] === 'dokter' && (!isset($_GET['page']) || !in_array($_GET['page'], ['index','dokter','pasien', 'periksa','detail_periksa','obat','riwayat','']))) {
         header('Location: index.php?page=dokter');
         exit;
     } elseif ($_SESSION['role'] === 'admin' && (!isset($_GET['page']) || !in_array($_GET['page'], ['dokter','pasien','poli','obat']))) {
         header('Location: index.php?page=pasien');
         exit;
-    } elseif ($_SESSION['role'] === 'pasien' && (!isset($_GET['page']) || !in_array($_GET['page'], ['lihat_jadwal_dokter','daftar_pasien','daftar_poli_pasien']))) {
+    } elseif ($_SESSION['role'] === 'pasien' && (!isset($_GET['page']) || !in_array($_GET['page'], ['lihat_jadwal_dokter','daftar_pasien','daftar_poli_pasien','riwayat']))) {
         header('Location: index.php?page=daftar_pasien');
         exit;
     }
@@ -40,14 +40,54 @@ include_once("koneksi.php");
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="index.php">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
+                            <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=daftar_pasien">Daftar Pasien</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=lihat_jadwal_dokter">Lihat Jadwal Dokter</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=daftar_poli_pasien">Daftar Poli Pasien</a>
+                            </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=riwayat">Riwayat</a>
+                            </li>
+                            
+                    </li>
+                </ul>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Data Master</a>
                         <ul class="dropdown-menu">
+                        <a>----Kelola Dokter----</a>
+                        <li>
+                                <a class="dropdown-item" href="index.php?page=dokter">Dokter</a>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="index.php?page=pasien">Pasien</a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="index.php?page=daftar_poli">Daftar Poli</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?page=periksa">Periksa</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?page=obat">Obat</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?page=detail_periksa">Detail Periksa</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?page=riwayat">Riwayat</a>
+                            </li>
+                            <a>----Kelola Admin----</a>
+                            <li>
                                 <a class="dropdown-item" href="index.php?page=dokter">Dokter</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?page=pasien">Pasien</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="index.php?page=poli">Poli</a>
@@ -56,21 +96,13 @@ include_once("koneksi.php");
                                 <a class="dropdown-item" href="index.php?page=obat">Obat</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="index.php?page=daftar_poli">Daftar Poli</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="index.php?page=detail_periksa">Detail Periksa</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="index.php?page=jadwal_periksa">Jadwal periksa</a>
+                                <a class="dropdown-item" href="index.php?page=jadwal_periksa">Jadwal Periksa</a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
-                            <a class="nav-link" href="index.php?page=periksa">Periksa</a>
-                            </li>
+                    </li>>
                 </ul>
-                
+            </div>
+           
                 <?php
                 if (isset($_SESSION['username'])) {
                     // Jika pengguna sudah login, tampilkan tombol "Logout"
@@ -113,6 +145,7 @@ include_once("koneksi.php");
                 }
             }
      ?>
+    
 </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
