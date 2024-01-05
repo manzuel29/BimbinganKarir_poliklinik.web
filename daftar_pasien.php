@@ -142,3 +142,7 @@ while ($data = mysqli_fetch_array($result)) {
 
     </tbody>
     </table>
+    <footer>
+  <p>Author: Manz</p>
+  <p><a href="https://github.com/manzuel29/BimbinganKarir_poliklinik.web">git.Mnz</a></p>
+</footer>
