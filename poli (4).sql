@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Des 2023 pada 14.56
+-- Waktu pembuatan: 05 Jan 2024 pada 15.05
 -- Versi server: 10.4.24-MariaDB
 -- Versi PHP: 8.0.19
 
@@ -41,7 +41,8 @@ CREATE TABLE `daftar_poli` (
 
 INSERT INTO `daftar_poli` (`id`, `id_pasien`, `id_jadwal`, `keluhan`, `no_antrian`) VALUES
 (1, 1, 1, 'sakit kepala', 1),
-(17, 2, 2, 'Badan Lemas', 1);
+(17, 2, 2, 'Badan Lemas', 1),
+(18, 3, 2, 'sakit kepala', 2);
 
 -- --------------------------------------------------------
 
@@ -147,7 +148,8 @@ CREATE TABLE `pasien` (
 
 INSERT INTO `pasien` (`id`, `nama`, `alamat`, `no_ktp`, `no_hp`, `no_rm`) VALUES
 (1, 'Zulfan', 'Pemalang', '3377197178917', '081329838052', '1'),
-(2, 'kh_tanhar', 'Cirebon', '33771313993', '085312831231', '2');
+(2, 'kh_tanhar', 'Cirebon', '33771313993', '085312831231', '2'),
+(3, 'DaniAditya', 'Pekalongan', '332713783817813', '0877112382738', '2');
 
 -- --------------------------------------------------------
 
@@ -168,7 +170,9 @@ CREATE TABLE `periksa` (
 --
 
 INSERT INTO `periksa` (`id`, `id_daftar_poli`, `tgl_periksa`, `catatan`, `biaya_periksa`) VALUES
-(1, 1, '2023-12-24 00:00:00', 'Banyak Istirahat', 50000);
+(1, 1, '2023-12-24 00:00:00', 'Banyak Istirahat', 50000),
+(27, 17, '2024-01-12 00:00:00', 'Rutin Olahraga', 70000),
+(28, 18, '0000-00-00 00:00:00', 'Minum Air Yang Banyak', 500000);
 
 -- --------------------------------------------------------
 
@@ -200,7 +204,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('admin','dokter') NOT NULL
+  `role` enum('admin','dokter','pasien') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -208,9 +212,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
-(1, 'admin', 'admin', ''),
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
-(0, 'manzu', '123', 'dokter');
+(0, 'dokterzulfan', '123', 'dokter'),
+(0, 'manzu', '123', 'pasien');
 
 --
 -- Indexes for dumped tables
@@ -279,7 +282,7 @@ ALTER TABLE `poli`
 -- AUTO_INCREMENT untuk tabel `daftar_poli`
 --
 ALTER TABLE `daftar_poli`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT untuk tabel `detail_periksa`
@@ -309,13 +312,13 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `periksa`
 --
 ALTER TABLE `periksa`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `poli`
