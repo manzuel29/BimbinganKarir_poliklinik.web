@@ -118,8 +118,20 @@ include'koneksi.php';
         ?>
     </select>
     </div>
+    
     <div class="col">
-        <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <!-- Input form -->
+        <!-- ... -->
+
+        <!-- Tombol Simpan dan Ubah hanya untuk dokter -->
+        <?php if ($_SESSION['role'] === 'dokter') { ?>
+            <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <?php } ?>
+
+        <!-- Tombol Simpan, Ubah, dan Hapus untuk admin -->
+        <?php if ($_SESSION['role'] === 'admin') { ?>
+            <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <?php } ?>
     </div>
     </form>
     <br>
@@ -140,6 +152,7 @@ include'koneksi.php';
     </thead>
         <!--thead atau baris judul-->
         <tbody>
+            
     <?php
     $result = mysqli_query(
     $mysqli,"SELECT dokter.*, poli.nama_poli as 'nama_poli' FROM dokter LEFT JOIN poli  ON (dokter.id_poli=poli.id) ORDER BY id"
@@ -147,25 +160,26 @@ include'koneksi.php';
 $no = 1;
 while ($data = mysqli_fetch_array($result)) {
 ?>
-    <tr>
-        <td><?php echo $no++ ?></td>
-        <td><?php echo $data['nama'] ?></td>
-        <td><?php echo $data['alamat'] ?></td>
-        <td><?php echo $data['no_hp'] ?></td>
-        <td><?php echo $data['nama_poli'] ?></td>
-        
-                <td>
-                <a class="btn btn-success rounded-pill px-3" href="index.php?page=dokter&id=<?php echo $data['id'] ?>">Ubah</a>
-                        <a class="btn btn-danger rounded-pill px-3" href="index.php?page=dokter&id=<?php echo $data['id'] ?>&aksi=hapus">Hapus</a>
-                    </td>
-            </tr>
+   <tr>
+    <td><?php echo $no++ ?></td>
+    <td><?php echo $data['nama'] ?></td>
+    <td><?php echo $data['alamat'] ?></td>
+    <td><?php echo $data['no_hp'] ?></td>
+    <td><?php echo $data['nama_poli'] ?></td>
+    <td>
+        <?php if ($_SESSION['role'] === 'dokter') { ?>
+            <a class="btn btn-success rounded-pill px-3" href="index.php?page=dokter&id=<?php echo $data['id']?>">Ubah</a>
+        <?php } ?>
+        <?php if ($_SESSION['role'] === 'admin') { ?>
+            <a class="btn btn-success rounded-pill px-3" href="index.php?page=dokter&id=<?php echo $data['id']?>">Ubah</a>
+            <a class="btn btn-danger rounded-pill px-3" href="index.php?page=dokter&id=<?php echo $data['id']?>&aksi=hapus">Hapus</a>
+        <?php } ?>
+    </td>
+</tr>
+
         <?php
         }
         ?>
 
     </tbody>
     </table>
-<footer>
-  <p>Author: Manz</p>
-  <p><a href="https://github.com/manzuel29/BimbinganKarir_poliklinik.web">git.Mnz</a></p>
-</footer>
