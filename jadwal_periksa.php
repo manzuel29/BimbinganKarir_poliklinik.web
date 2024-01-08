@@ -46,7 +46,7 @@ if (isset($_GET['aksi'])) {
     }
 
     echo "<script> 
-            document.location='index.php';
+            document.location='index.php?page=jadwal_periksa';
             </script>";
 }
 ?>
