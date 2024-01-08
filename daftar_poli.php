@@ -106,22 +106,18 @@ include'koneksi.php';
         <label for="inputNama" class="form-label fw-bold">
             ID Jadwal
         </label>
+        
         <select class="form-control" name="id_jadwal">
-        <?php
-        $selected = '';
-        $jadwal_periksa = mysqli_query($mysqli, "SELECT * FROM jadwal_periksa");
-        while ($data = mysqli_fetch_array($jadwal_periksa)) {
-            if ($data['id'] == $id_jadwal) {
-                $selected = 'selected="selected"';
-            } else {
-                $selected = '';
-            }
-        ?>
-            <option value="<?php echo $data['id'] ?>" <?php echo $selected ?>><?php echo $data['id_dokter'] ?></option>
-        <?php
-        }
-        ?>
-    </select>
+    <?php
+    $jadwal_periksa = mysqli_query($mysqli, "SELECT * FROM jadwal_periksa where  status = 'aktif'");
+    while ($data = mysqli_fetch_array($jadwal_periksa)) {
+        $selected = ($data['id'] == $id_jadwal) ? 'selected="selected"' : '';
+
+        echo '<option value="' . $data['id'] . '" ' . $selected . '>' . $data['id_dokter'] . '</option>';
+    }
+    ?>
+</select>
+
     </div>
         <div class="col">
         <label for="inputKeluhan" class="form-label fw-bold">
@@ -158,7 +154,13 @@ include'koneksi.php';
         <!--thead atau baris judul-->
         <tbody>
     <?php
-    $result = mysqli_query($mysqli, "SELECT dp.*, p.nama as 'nama_pasien' FROM daftar_poli dp LEFT JOIN pasien p ON (dp.id_pasien=p.id) ORDER BY id ASC");
+    $result = mysqli_query($mysqli, "SELECT dp.*, p.nama as 'nama_pasien', jp.id_dokter
+    FROM daftar_poli dp 
+    LEFT JOIN pasien p ON (dp.id_pasien=p.id) 
+    LEFT JOIN jadwal_periksa jp ON (dp.id_jadwal = jp.id)
+
+    ORDER BY dp.id ASC");
+
 
     if (!$result) {
         die("Error: " . mysqli_error($mysqli));
