@@ -114,7 +114,21 @@ include'koneksi.php';
         <input type="varchar" class="form-control" name="no_rm" id="inputAlamat" placeholder="Nomor RM" value="<?php echo $no_rm ?>">
     </div>
     <div class="col">
-        <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <!-- Input form -->
+        <!-- ... -->
+
+        <!-- Tombol Simpan dan Ubah hanya untuk dokter -->
+        <?php if ($_SESSION['role'] === 'pasien') { ?>
+            <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <?php } ?>
+        <?php if ($_SESSION['role'] === 'dokter') { ?>
+            <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <?php } ?>
+
+        <!-- Tombol Simpan, Ubah, dan Hapus untuk admin -->
+        <?php if ($_SESSION['role'] === 'admin') { ?>
+            <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
+        <?php } ?>
     </div>
     </form>
     <br>
@@ -151,8 +165,13 @@ while ($data = mysqli_fetch_array($result)) {
         <td><?php echo $data['no_hp'] ?></td>
         <td><?php echo $data['no_rm'] ?></td>
                 <td>
-                <a class="btn btn-success rounded-pill px-3" href="index.php?page=pasien&id=<?php echo $data['id'] ?>">Ubah</a>
-                        <a class="btn btn-danger rounded-pill px-3" href="index.php?page=pasien&id=<?php echo $data['id'] ?>&aksi=hapus">Hapus</a>
+        <?php if ($_SESSION['role'] === 'dokter') { ?>
+            <a class="btn btn-success rounded-pill px-3" href="index.php?page=pasien&id=<?php echo $data['id']?>">Ubah</a>
+        <?php } ?>
+        <?php if ($_SESSION['role'] === 'admin') { ?>
+            <a class="btn btn-success rounded-pill px-3" href="index.php?page=pasien&id=<?php echo $data['id']?>">Ubah</a>
+            <a class="btn btn-danger rounded-pill px-3" href="index.php?page=pasien&id=<?php echo $data['id']?>&aksi=hapus">Hapus</a>
+        <?php } ?>
                     </td>
             </tr>
         <?php
@@ -161,7 +180,3 @@ while ($data = mysqli_fetch_array($result)) {
 
     </tbody>
     </table>
-<footer>
-  <p>Author: Manz</p>
-  <p><a href="https://github.com/manzuel29/BimbinganKarir_poliklinik.web">git.Mnz</a></p>
-</footer>
